@@ -4,6 +4,7 @@
 # default variables
 zadir="$HOME"'/.zaread/'
 reader="zathura"
+args="--fork"
 
 # if ~/.zaread doesn't exist, we create it.
 if [[ ! -d "$zadir" ]]; then
@@ -46,7 +47,7 @@ echo "$directory""$file"
 # if file type is pdf, then just read the file
 if [[ `file "$directory""$file" | cut -d':' -f2 | cut -d' ' -f2` == "PDF"  ]]; then
   echo "The file is already in PDF format."
-  $reader "$directory""$file"
+  $reader $args "$directory""$file"
 # else check if you already have its pdf version (if not, create it)
 else
   pdffile=`echo "$file" | rev | cut -d'.' -f2- | rev`".pdf"
@@ -62,5 +63,5 @@ else
     fi
     echo "$check" > "$zadir"cksum/"$file".check
   fi
-  $reader "$zadir$pdffile"
+  $reader $args "$zadir$pdffile"
 fi
